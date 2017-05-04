@@ -63,6 +63,7 @@ img_input = tf.placeholder(tf.uint8, shape=(None, None, 3))
 # Evaluation pre-processing: resize to SSD net shape.
 image_pre, labels_pre, bboxes_pre, bbox_img = ssd_vgg_preprocessing.preprocess_for_eval(
     img_input, None, None, net_shape, data_format, resize=ssd_vgg_preprocessing.Resize.WARP_RESIZE)
+# img_input, None, None, net_shape, data_format, resize=ssd_vgg_preprocessing.Resize.WARP_RESIZE)
 image_4d = tf.expand_dims(image_pre, 0)
 
 # Define the SSD model.
@@ -116,9 +117,10 @@ def process_image(img, select_threshold=0.5, nms_threshold=.45, net_shape=(300, 
 
 # Test on some demo image and visualize output.
 path = './demo/'
-image_names = sorted(os.listdir(path))
-for image_name in image_names:
-    img = mpimg.imread(path + image_name)
+image_paths = sorted(tf.gfile.Glob('demo/*.*g'))
+# image_names = sorted(os.listdir(path))
+for image_path in image_paths:
+    img = mpimg.imread(image_path)
     rclasses, rscores, rbboxes =  process_image(img)
 
     # visualization.bboxes_draw_on_img(img, rclasses, rscores, rbboxes, visualization.colors_plasma)
