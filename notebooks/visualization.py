@@ -23,6 +23,12 @@ import matplotlib.cm as mpcm
 # =========================================================================== #
 # Some colormaps.
 # =========================================================================== #
+CLASSES = ('back_ground', 'aeroplane', 'bicycle', 'bird', 'boat',
+           'bottle', 'bus', 'car', 'cat', 'chair',
+           'cow', 'diningtable', 'dog', 'horse',
+           'motorbike', 'person', 'pottedplant',
+           'sheep', 'sofa', 'train', 'tvmonitor')
+
 def colors_subselect(colors, num_classes=21):
     dt = len(colors) // num_classes
     sub_colors = []
@@ -106,7 +112,8 @@ def plt_bboxes(img, classes, scores, bboxes, figsize=(10,10), linewidth=1.5):
                                  edgecolor=colors[cls_id],
                                  linewidth=linewidth)
             plt.gca().add_patch(rect)
-            class_name = str(cls_id)
+            # class_name = str(cls_id)
+            class_name = CLASSES[cls_id]
             plt.gca().text(xmin, ymin - 2,
                            '{:s} | {:.3f}'.format(class_name, score),
                            bbox=dict(facecolor=colors[cls_id], alpha=0.5),
